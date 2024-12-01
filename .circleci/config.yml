@@ -1,0 +1,73 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.12.7
+    working_directory: ~/repo/Projet10
+    steps:
+      - checkout  # Clone le code source depuis le dépôt GitHub
+
+      # Installation des dépendances nécessaires
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            python -m pip install webdriver-manager --upgrade
+            python -m pip install packaging
+
+      # Installation de Google Chrome pour les tests Selenium
+      - run:
+          name: Install Specific Stable Chrome Version
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y wget unzip
+            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+
+      # Vérification de la version installée de Chrome
+      - run:
+          name: Verify Chrome Version
+          command: google-chrome --version
+
+      # Configuration de Django
+      - run:
+          name: Setup Django
+          command: |
+            . venv/bin/activate
+            export DJANGO_SETTINGS_MODULE=webapp.settings
+            export PYTHONPATH=$PYTHONPATH:~/repo/Projet10/webapp
+
+      # Exécution des migrations de la base de données
+      - run:
+          name: Run Migrations
+          command: |
+            . venv/bin/activate
+            python webapp/manage.py migrate
+
+      # Installation de pytest pour les tests
+      - run:
+          name: Install pytest
+          command: |
+            . venv/bin/activate
+            pip install pytest
+
+      # Lancement des tests
+      - run:
+          name: Run Tests
+          command: |
+            . venv/bin/activate
+            export DJANGO_SETTINGS_MODULE=webapp.settings
+            export PYTHONPATH=$PYTHONPATH:~/repo/Projet10/webapp
+            pytest webapp/users/tests --maxfail=3 --disable-warnings -v  # Chemin modifié vers users/tests
+
+workflows:
+  version: 2
+  all_jobs:
+    jobs:
+      - build-and-test
