@@ -1,0 +1,16 @@
+.substitute-info {
+    color: red;
+}
+
+.nutriscore-letter {
+    font-size: 1.2rem;
+    color: grey;
+    text-transform: lowercase;
+    margin: 0 5px;
+}
+
+.nutriscore-letter.active {
+    font-size: 1.5rem;
+    color: #fd7e14;
+    text-transform: uppercase;
+}

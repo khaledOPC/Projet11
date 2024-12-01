@@ -1,0 +1,37 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-center">MON COMPTE</h1> <!-- Titre de la page -->
+
+        <!-- Section grise avec le nom et l'email de l'utilisateur -->
+        <div style="background-color: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h2 class="text-center">Bienvenue, {{ user.username }} !</h2>
+            <p class="text-center">Email : {{ user.username }}</p>
+        </div>
+
+        <h2>Mes Favoris</h2>
+        {% if favorites %}
+            <div class="row">
+                {% for favorite in favorites %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ favorite.product.name }}</h4>
+                            <div>
+                                <img src="{{ favorite.product.image_url }}" class="img-fluid" alt="{{ favorite.product.name }}" style="border-radius: 10px;">
+                                <p class="card-text">Nutri-Score: {{ favorite.product.nutriscore }}</p>
+                                <p class="card-text">Nova-Score: {{ favorite.product.novascore }}</p>
+                            </div> 
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Aucun produit favori enregistré.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

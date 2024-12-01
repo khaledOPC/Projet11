@@ -1,0 +1,26 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block extra_style %}
+  <link href="{% static 'css/signup.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" >Créer un compte</button>
+  </form></a></li>
+  <a href="{% url 'home' %}" class="connexion"> Connectez-vous mtn </a>
+{% endblock %}
+
+
+{% block header %}
+ 
+{% endblock %}
+
+
+{% block nav %}
+                
+{% endblock %}

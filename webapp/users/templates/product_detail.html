@@ -1,0 +1,52 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Bannière avec l'image de fond -->
+    <div class="product-banner" style="background-image: url('{{ product.image_url }}'); background-size: cover; background-position: center; height: 300px; position: relative; border-radius: 15px; overflow: hidden; margin-bottom: 20px;">
+        <div class="overlay" style="position: absolute; background: rgba(0, 0, 0, 0.5); top: 0; left: 0; height: 100%; width: 100%;"></div>
+        <h1 style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; background-color: rgba(0, 0, 0, 0.6); padding: 10px 20px; border-radius: 5px; font-size: 2.5rem;">
+            {{ product.name }}
+        </h1>
+    </div>
+
+    <!-- Informations nutritionnelles et Nutri-Score -->
+    <div class="row" style="padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <div class="col-lg-6 text-center">
+            <h2 style="margin-bottom: 20px;">Nutri-Score</h2>
+            <div style="font-size: 4rem; font-weight: bold; color: black;"> <!-- Affiche uniquement la lettre du Nutri-Score -->
+                {{ product.nutriscore|upper }} <!-- La lettre est affichée en majuscule -->
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <h2 style="margin-bottom: 20px;">Valeurs nutritionnelles pour 100g :</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li><strong>Énergie:</strong> {{ product.nutrition_data.energy|default:"N/A" }} kcal</li>
+                <li><strong>Lipides:</strong> {{ product.nutrition_data.fats|default:"N/A" }} g</li>
+                <li><strong>Acides gras saturés:</strong> {{ product.nutrition_data.saturated_fats|default:"N/A" }} g</li>
+                <li><strong>Glucides:</strong> {{ product.nutrition_data.carbohydrates|default:"N/A" }} g</li>
+                <li><strong>Sucres:</strong> {{ product.nutrition_data.sugars|default:"N/A" }} g</li>
+                <li><strong>Protéines:</strong> {{ product.nutrition_data.proteins|default:"N/A" }} g</li>
+                <li><strong>Sel:</strong> {{ product.nutrition_data.salt|default:"N/A" }} g</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bouton pour accéder à la fiche Open Food Facts -->
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <a href="{{ product.url }}" target="_blank" class="btn btn-outline-primary" style="margin-top: 30px;">
+                Voir le produit sur Open Food Facts
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

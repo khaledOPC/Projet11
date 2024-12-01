@@ -1,0 +1,17 @@
+Les tests unitaires dans Django sont conçus de manière à isoler les différentes parties de votre code afin de vérifier si chaque unité fonctionne correctement. Lorsque vous effectuez des requêtes avec le client de test de Django, ces requêtes ne sont pas envoyées à un serveur en direct. Au lieu de cela, Django simule l'environnement de serveur et exécute les vues directement, retournant des objets Response que vous pouvez ensuite inspecter dans vos tests.
+
+Pourquoi pas de Mock ?
+Isolation de Base de Données:
+
+Django crée une base de données de test vierge pour chaque classe TestCase, qui est isolée de la base de données réelle de votre application. Vous n’avez donc pas besoin de simuler ou de "mock" les interactions avec la base de données, car vos tests n’affectent pas les données réelles.
+Client de Test:
+
+Django fournit un client de test (self.client) qui permet d’envoyer des requêtes HTTP à vos vues sans avoir besoin de les simuler, et ceci dans un environnement complètement isolé. Cela élimine le besoin de "mock" les requêtes HTTP, car le client de test s’assure qu’elles sont gérées en interne sans interactions avec un serveur réel.
+Facilité et Cohérence:
+
+Écrire des tests en utilisant la base de données de test et le client de test de Django est souvent plus simple et plus direct que de créer des "mocks" pour chaque interaction. Il assure également une cohérence, car vous testez vos vues et modèles tels qu'ils interagiraient dans l'environnement réel de Django.
+Quand utiliser les Mocks ?
+Cela ne signifie pas que vous n'aurez jamais besoin de "mocks" dans les tests Django. Les "mocks" peuvent être utiles dans des situations spécifiques, par exemple lorsque vous interagissez avec des services externes ou des API, où simuler la réponse d'un service externe est crucial pour s'assurer que votre code interagit correctement avec ce service sans dépendre de sa disponibilité ou de son état. Dans ces cas, le module unittest.mock en Python peut être utilisé pour "mock" ces interactions.
+
+Résumé :
+Dans les tests Django, vous utilisez la base de données de test et le client de test pour simuler un environnement isolé et pour tester vos vues, modèles et autres composants sans affecter votre environnement de développement réel. Les "mocks" sont généralement réservés aux interactions avec des composants externes, comme des services web ou des API, où l'isolation de votre code des effets de bord externes est nécessaire.

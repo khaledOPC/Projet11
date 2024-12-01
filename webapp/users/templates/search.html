@@ -1,0 +1,72 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block extra_style %}
+<link href="{% static 'css/search.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if product %}
+        <!-- Partie avec fond gris et image de l'aliment au centre (image plus large) -->
+        <div class="row justify-content-center" style="background-color: #f0f0f0; padding: 30px; border-radius: 10px; margin-bottom: 20px;">
+            <div class="col-lg-8 text-center">
+                <div class="image_container" style="display: inline-block; position: relative;">
+                    <!-- Image de l'aliment plus large et ajustée -->
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width: 800px; height: 200px;">
+                    <!-- Nom du produit ajusté au-dessus de l'image avec lien vers la page 'product_detail' -->
+                    <a href="{% url 'product_detail' product.id %}" style="text-decoration: none;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; background: rgba(0, 0, 0, 0.6); padding: 5px 20px; border-radius: 5px; font-size: 1.2rem;">
+                            {{ product.name }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Aucun résultat trouvé.</p> <!-- Message affiché si aucun produit n'a été trouvé -->
+    {% endif %}
+
+    <!-- Section des substituts -->
+    {% if substitutes %}
+        <h3 class="text-center">Vous pouvez remplacer cet aliment par : </h3>
+        <div class="row justify-content-center"> <!-- Conteneur pour les substituts -->
+            {% for substitute in substitutes %}
+                <div class="col-lg-3 col-md-4 mb-4"> <!-- Réduction de la largeur de la grille pour chaque substitut -->
+                    <div class="card h-100" style="position: relative; width: 150px; height: 250px;"> <!-- Carte avec taille réduite -->
+                        
+                        <!-- Nova-Score en haut à droite avec une taille de police plus grande pour chaque substitut -->
+                        <div style="position: absolute; top: 5px; right: 5px; background-color: #f8f9fa; color: black; font-weight: bold; padding: 2px 5px; border-radius: 3px; font-size: 1.2rem;">
+                            {{ substitute.nutriscore }}
+                        </div>
+                        
+                        <div class="image_box"> <!-- Conteneur pour l'image de chaque substitut -->
+                            <figure itemprop="image" itemscope="" itemtype="https://schema.org/ImageObject" style="margin-bottom:0">
+                                <a href="{% url 'product_detail' substitute.id %}"> <!-- Lien vers la page de détail du substitut -->
+                                    <img style="border-radius:5px;margin-bottom:0.3rem;" id="og_image" class="product_image" src="{{ substitute.image_url }}" width="133" height="200" alt="{{ substitute.name }}" itemprop="thumbnail" loading="lazy">
+                                </a>
+                            </figure>
+                        </div>
+
+                        <div class="card-body" style="font-size: 0.8rem;"> <!-- Corps de la carte réduit avec police plus petite -->
+                            <h4 class="card-title" style="font-size: 0.9rem;"> <!-- Titre de la carte (nom du substitut) avec police réduite -->
+                                {{ substitute.name }}
+                            </h4>
+                        </div>
+                        
+                        <!-- Bouton pour sauvegarder chaque substitut -->
+                        <div style="text-align: center; margin-top: 10px;">
+                            <a href="{% url 'add_to_favorites' substitute.id %}" class="btn btn-primary">Sauvegarder</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun substitut trouvé.</p> <!-- Message affiché si aucun substitut n'a été trouvé -->
+    {% endif %}
+</div>
+{% endblock %}

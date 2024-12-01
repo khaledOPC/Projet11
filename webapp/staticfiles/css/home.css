@@ -1,0 +1,48 @@
+/* Style de la barre de recherche dans le header */
+.search-container {
+    margin-top: 10px; /* Réduit l'espace au-dessus de la barre de recherche */
+    text-align: center; /* Centre le conteneur */
+}
+
+.search-input {
+    width: 60%; /* Ajuste la largeur de la barre de recherche */
+    padding: 10px;
+    font-size: 16px;
+}
+ 
+.search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Nouvelle barre de recherche dans le navbar */
+.navbar-search-container {
+    margin-right: 20px; /* Espace entre la barre de recherche et les icônes */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search-input {
+    width: 180px; /* Largeur de la barre de recherche dans le navbar */
+    padding: 6px; /* Padding interne */
+}
+
+.navbar-search-button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px; /* Espacement entre le champ de saisie et le bouton */
+}
+
+.navbar-search-button:hover {
+    background-color: #0056b3;
+}

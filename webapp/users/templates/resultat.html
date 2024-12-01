@@ -1,0 +1,61 @@
+{% extends 'home.html' %}
+{% load static %}
+
+
+{% block extra_style %}
+  <link href="{% static 'css/home.css' %}" rel="stylesheet" />
+{% endblock %}
+  
+{% block header %}
+
+               
+
+{% endblock %}
+
+
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container px-4 px-lg-5">
+       <a class="navbar-brand" href="#page-top"><i class="bi bi-piggy-bank-fill text-primary"> Pur beurre </i></i></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+<div class="form-group mr-2">
+    <input type="text" id="monIdUnique" class="form-control" placeholder="Rechercher">
+</div>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#about"><a href="{% url 'resultat' %}" class="connexion" > <i class="bi bi-person-circle" data-toggle="tooltip" title="Connexion"></i></i></a></a></li>
+                <li class="nav-item"><a class="nav-link" href="#about"><a href="{% url 'signup' %}" class="créerUnCompte" > <i class="fas fa-carrot" data-toggle="tooltip" title="Mes aliments"></i></i></a></a></li>
+                <i class="bi bi-envelope-at"></i>
+
+
+                <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li> <!-- Ajouter cette ligne pour l'icône de recherche -->
+
+                <li class="nav-item"><a class="nav-link" href="#about"><a href="{% url 'signup' %}" class="créerUnCompte" ><i class="bi bi-lock" data-toggle="tooltip" title="Déconexion"></i></i></a></a></li><p>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="page-section bg-dark" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Aliment recherché</h2>
+                        <hr class="divider divider-light" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}
+
+<!-- Footer-->
+{% block footer %}
+            <footer class="bg-light py-5">
+                <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2023 - Company Name</div></div>
+            </footer>
+{% endblock %}
