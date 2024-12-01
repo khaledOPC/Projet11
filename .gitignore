@@ -1,0 +1,39 @@
+# Environnement virtuel
+env/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+
+# Paramètres système
+*.DS_Store
+*.log
+*.env
+
+# VSCode ou tout autre éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers de test, de build et d'installation
+build/
+dist/
+*.egg-info/
+
+# Coverage report
+htmlcov/
+.coverage
+.coverage.*
+
+# Pytest cache
+.pytest_cache/
+
+
+# Selenium / WebDriver Manager cache
+.wdm/
+
