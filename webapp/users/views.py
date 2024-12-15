@@ -14,6 +14,12 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .models import Favorite, Product
 from django.contrib import messages  # Pour afficher les messages d'erreur
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.contrib.auth.forms import PasswordResetForm
+from .forms import UserRegistrationForm
+
+
 
 def home(request):
     """
@@ -128,7 +134,23 @@ def resultat(request):
     return render(request, 'resultat.html', {'form': form})
 
 
-# Vue pour gérer l'inscription des utilisateurs
+def signup(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)  # Utilisation du nouveau formulaire
+        if form.is_valid():
+            form.save()  # Création et sauvegarde de l'utilisateur, y compris l'email
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)  # Authentification automatique
+            login(request, user)  # Connexion automatique après inscription
+            return redirect('home')  # Redirection vers la page d'accueil
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'signup.html', {'form': form})
+
+
+'''# Vue pour gérer l'inscription des utilisateurs
 def signup(request):
     """
     Gère l'inscription des utilisateurs.
@@ -154,31 +176,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
-
-
-
-
-
-# Vue pour gérer l'inscription des utilisateurs
-def signup(request):
-    """
-    Gère l'inscription des utilisateurs.
-    Crée un nouvel utilisateur avec les données fournies, 
-    et si l'inscription est réussie, connecte l'utilisateur et le redirige vers la page d'accueil.
-    """
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
-
+'''
 
 def profile(request):
     return render(request, 'profile.html')

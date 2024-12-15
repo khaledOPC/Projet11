@@ -14,6 +14,18 @@ from pathlib import Path
 import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Par exemple pour Gmail
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'qaledalwalid@gmail.com'
+EMAIL_HOST_PASSWORD = 'gchh oynx hshc yxvu'
+
 
 sentry_sdk.init(
         dsn="https://f49d0ec93dc80793ba7e544d83dde974@o4508229866881024.ingest.de.sentry.io/4508229967282256",
@@ -40,7 +52,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-628i1k42^1r5z@0y(qjqi(w3-h
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENV == 'production':
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ['46.101.83.16']
 else:
     DEBUG = True

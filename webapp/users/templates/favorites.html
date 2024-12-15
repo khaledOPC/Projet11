@@ -7,7 +7,7 @@
         <!-- Section grise avec le nom et l'email de l'utilisateur -->
         <div style="background-color: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0;">
             <h2 class="text-center">Bienvenue, {{ user.username }} !</h2>
-            <p class="text-center">Email : {{ user.username }}</p>
+            <p class="text-center">Email : {{ user.email }}</p>
         </div>
 
         <h2>Mes Favoris</h2>
@@ -17,13 +17,18 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
+                                <!-- Nom du produit -->
                                 <h4 class="card-title">{{ favorite.product.name }}</h4>
-                            <div>
-                                <img src="{{ favorite.product.image_url }}" class="img-fluid" alt="{{ favorite.product.name }}" style="border-radius: 10px;">
-                                <p class="card-text">Nutri-Score: {{ favorite.product.nutriscore }}</p>
-                                <p class="card-text">Nova-Score: {{ favorite.product.novascore }}</p>
-                            </div> 
-                            </div>
+                                <div>
+                                    <!-- Image du produit -->
+                                    <img src="{{ favorite.product.image_url }}" class="img-fluid" alt="{{ favorite.product.name }}" style="border-radius: 10px;">
+                                    <p class="card-text">Nutri-Score: {{ favorite.product.nutriscore }}</p>
+                                    <p class="card-text">Nova-Score: {{ favorite.product.novascore }}</p>
+                                </div>
+                                <!-- Bouton pour retirer le produit -->
+                                <div class="mt-3">
+                                    <a href="{% url 'remove_favorite' favorite.product.id %}" class="btn btn-danger btn-sm">Retirer</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -33,5 +38,4 @@
             <p class="text-center">Aucun produit favori enregistré.</p>
         {% endif %}
     </div>
-
 {% endblock %}

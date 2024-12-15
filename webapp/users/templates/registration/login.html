@@ -11,6 +11,10 @@
 
                 <!-- Bouton de connexion -->
                 <button type="submit" class="btn btn-primary">Connexion</button>
+
+                <a href="{% url 'password_reset' %}" class="btn btn-link">Mot de passe oublié ?</a>
+
+
                 
                 <!-- Message d'erreur s'il y a une erreur de connexion -->
                 {% if form.non_field_errors %}

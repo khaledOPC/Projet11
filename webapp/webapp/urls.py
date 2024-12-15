@@ -33,6 +33,18 @@ urlpatterns = [
     path('add_to_favorites/<int:product_id>/', add_to_favorites, name='add_to_favorites'),
     path('favorites/', favorites, name='favorites'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('remove_favorite/<int:product_id>/', views.remove_favorite, name='remove_favorite'),
     path('accounts/profile/', views.profile, name='profile'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset_done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('logout/', custom_logout_view, name='logout'),  # Modification pour la déconnexion personnalisée
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+'''
+from django.contrib.auth.models import User
+user = User.objects.create_user(username="testuser", email="testuser@example.com", password="testpassword")
+user.is_active = True
+user.save()
+'''
