@@ -49,9 +49,6 @@ def search(request):
     return render(request, 'search.html', {'product': product, 'substitutes': substitutes})
 
 
-
-
-
 @login_required
 def Connected(request):
     """
@@ -148,35 +145,7 @@ def signup(request):
         form = UserRegistrationForm()
 
     return render(request, 'signup.html', {'form': form})
-
-
-'''# Vue pour gérer l'inscription des utilisateurs
-def signup(request):
-    """
-    Gère l'inscription des utilisateurs.
-    Crée un nouvel utilisateur avec les données fournies, 
-    et si l'inscription est réussie, connecte l'utilisateur et le redirige vers la page d'accueil.
-    """
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            # Vérifie si le mot de passe est bien renseigné
-            password = form.cleaned_data.get('password1')
-            if not password:
-                # Affiche un message d'erreur si le mot de passe est manquant
-                messages.error(request, "Le mot de passe est requis pour créer un compte.")
-                return render(request, 'signup.html', {'form': form})
-            
-            # Enregistre le nouvel utilisateur
-            form.save()
-            username = form.cleaned_data.get('username')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
-'''
+ 
 
 def profile(request):
     return render(request, 'profile.html')
@@ -203,7 +172,7 @@ def favorites(request):
     """
     Affiche les produits favoris de l'utilisateur connecté.
     """
-    user_favorites = Favorite.objects.filter(user=request.user)  # Récupère les favoris uniquement pour l'utilisateur connecté
+    user_favorites = Favorite.objects.filter(user=request.user)  # Affiche les favoris uniquement pour l'utilisateur connecté
     return render(request, 'favorites.html', {'favorites': user_favorites})
 
 
@@ -212,9 +181,10 @@ def remove_favorite(request, product_id):
     """
     Supprime un produit des favoris de l'utilisateur connecté.
     """
+
     product = get_object_or_404(Product, id=product_id)
     favorite = Favorite.objects.filter(user=request.user, product=product)
     if favorite.exists():
         favorite.delete()
-        messages.success(request, f"Le produit {product.name} a été retiré de vos favoris.")
+        messages.success(request, f" {request.user.username} Le produit {product.name} a été retiré de vos favoris.")
     return redirect('favorites')
