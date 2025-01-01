@@ -63,7 +63,7 @@ jobs:
           command: |
             . venv/bin/activate
             export DJANGO_SETTINGS_MODULE=webapp.settings
-            export PYTHONPATH=$PYTHONPATH:~/repo/Projet10/webapp
+            export PYTHONPATH=$PYTHONPATH:~/repo/Projet11/webapp
             pytest webapp/users/tests --maxfail=3 --disable-warnings -v  # Chemin modifié vers users/tests
 
 workflows:
