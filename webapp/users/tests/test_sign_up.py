@@ -13,7 +13,7 @@ class SignupViewTest(TestCase):
         self.signup_url = reverse('signup')
         self.correct_form_data = {
             'username': 'newuser',
-            'email':'user.email@gmail.com',
+            'email':'unique.email@gmail.com',
             'password1':'testpassword123',
             'password2':'testpassword123'
         }
@@ -25,7 +25,7 @@ class SignupViewTest(TestCase):
             'password2':'differentpassword'
         }
 
-        self.existing_user = User.objects.create_user(username='existinguser', password='password123')
+        self.existing_user = User.objects.create_user(username='existinguser', email='user.email@gmail.com', password='password123')
 
     def test_signup_view_get(self):
         # Teste si la vue 'signup' répond correctement à une requête GET
@@ -39,6 +39,27 @@ class SignupViewTest(TestCase):
         self.assertEqual(response.status_code, 302)  # Vérifie que la réponse est une redirection (302)
         # Vérifie que l'utilisateur est bien créé dans la base de données
         self.assertTrue(User.objects.filter(username='newuser').exists())
+
+
+    def test_email_user(self):
+        initial_user_count = User.objects.filter(email='user.email@gmail.com').count()
+        duplicate_email_data = {
+            'username': 'anotheruser',
+            'email': 'user.email@gmail.com',  # Email déjà utilisé
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+            }
+
+        response = self.client.post(self.signup_url, duplicate_email_data)
+
+        # Vérifie que la réponse ne redirige pas (le formulaire doit échouer)
+        self.assertEqual(response.status_code, 200)
+
+        # Vérifie qu'aucun nouvel utilisateur n'a été créé
+        self.assertEqual(User.objects.filter(email='user.email@gmail.com').count(), initial_user_count)
+
+
+
 
     def test_signup_with_mismatched_passwords(self):
         # Teste l'inscription avec des mots de passe qui ne correspondent pas
@@ -58,3 +79,4 @@ class SignupViewTest(TestCase):
         self.assertEqual(response.status_code, 200)  # Vérifie qu'il n'y a pas de redirection
         # Vérifie qu'il n'y a qu'un seul utilisateur avec ce nom d'utilisateur dans la base de données
         self.assertEqual(User.objects.filter(username='existinguser').count(), 1)
+
